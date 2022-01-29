@@ -4,12 +4,15 @@ import Home from "./components/Home";
 import Posts from "./components/Posts";
 import Register from "./components/Register";
 import Login from "./components/Login";
+import Navbar from "./components/Navbar";
 
-const BASE_URL =
+export const BASE_URL =
     "https://strangers-things.herokuapp.com/api/2110-FTB-ET-WEB-PT";
 
 const App = (props) => {
     const [posts, setPosts] = useState([]);
+    const [token, setToken] = useState("");
+    const [user, setUser] = useState({});
 
     async function fetchPosts() {
         const response = await fetch(`${BASE_URL}/posts`);
@@ -17,22 +20,30 @@ const App = (props) => {
         setPosts(info.data.posts);
     }
 
-    // console.log(posts);
+    async function fetchUser() {
+        const lsToken = localStorage.getItem("token");
+        if (lsToken) {
+            const resp = await fetch(`${BASE_URL}/users/me`, {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${lsToken}`,
+                },
+            });
+            const info = await resp.json();
+            setUser(info.data);
+        }
+    }
 
     useEffect(() => {
         fetchPosts();
-    }, []);
+        fetchUser();
+    }, [token]);
 
     return (
-        <div id="container">
-            <div id="navbar">
-                <Link to="/">Home</Link>
-                <Link to="/posts">Posts</Link>
-                <Link to="/register">Register</Link>
-                <Link to="/login">Login</Link>
-            </div>
+        <div className="m-2.5">
+            <Navbar user={user} setUser={setUser} />
 
-            <div className="grid">
+            <div className="container ">
                 <Route exact path="/">
                     <Home />
                 </Route>
@@ -40,10 +51,10 @@ const App = (props) => {
                     <Posts posts={posts} />
                 </Route>
                 <Route path="/register">
-                    <Register />
+                    <Register setToken={setToken} />
                 </Route>
                 <Route path="/login">
-                    <Login />
+                    <Login setToken={setToken} />
                 </Route>
             </div>
         </div>

@@ -500,16 +500,38 @@ Ensure the default browser behavior of the `hidden` attribute.
   }
 }
 
-.grid {
-  display: grid;
+.m-2\.5 {
+  margin: 0.625rem;
 }
 
-.grid-cols-4 {
-  grid-template-columns: repeat(4, minmax(0, 1fr));
+.m-2 {
+  margin: 0.5rem;
 }
 
-.gap-4 {
-  gap: 1rem;
+.flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.justify-end {
+  justify-content: flex-end;
+}
+
+.space-x-4 > :not([hidden]) ~ :not([hidden]) {
+  --tw-space-x-reverse: 0;
+  margin-right: calc(1rem * var(--tw-space-x-reverse));
+  margin-left: calc(1rem * calc(1 - var(--tw-space-x-reverse)));
+}
+
+.rounded-md {
+  border-radius: 0.375rem;
 }
 
 .shadow-lg {
