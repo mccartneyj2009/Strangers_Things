@@ -32,7 +32,7 @@ const App = (props) => {
                 <Link to="/login">Login</Link>
             </div>
 
-            <div id="main-section">
+            <div className="grid">
                 <Route exact path="/">
                     <Home />
                 </Route>
