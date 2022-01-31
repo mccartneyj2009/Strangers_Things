@@ -40,23 +40,21 @@ const App = (props) => {
     }, [token]);
 
     return (
-        <div className="m-2.5">
+        <div>
             <Navbar user={user} setUser={setUser} />
 
-            <div className="container ">
-                <Route exact path="/">
-                    <Home />
-                </Route>
-                <Route path="/posts">
-                    <Posts posts={posts} />
-                </Route>
-                <Route path="/register">
-                    <Register setToken={setToken} />
-                </Route>
-                <Route path="/login">
-                    <Login setToken={setToken} />
-                </Route>
-            </div>
+            <Route exact path="/">
+                <Home />
+            </Route>
+            <Route path="/posts">
+                <Posts posts={posts} />
+            </Route>
+            <Route path="/register">
+                <Register setToken={setToken} />
+            </Route>
+            <Route path="/login">
+                <Login setToken={setToken} />
+            </Route>
         </div>
     );
 };
