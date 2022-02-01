@@ -2,7 +2,17 @@ import React from "react";
 
 const Posts = ({ posts }) => {
     return (
-        <div className=" flex flex-col justify-center items-center">
+        <div className=" flex flex-col justify-center items-center w-full h-auto">
+            <form
+                className="w-full flex flex-row justify-center items-center bg-slate-100 h-14"
+                onSubmit={(e) => {
+                    e.preventDefault();
+                }}
+            >
+                <label>Search Posts:</label>
+                <input placeholder="Search term"></input>
+                <button>Search</button>
+            </form>
             {posts.map((index) => {
                 return (
                     <div

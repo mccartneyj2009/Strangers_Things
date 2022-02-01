@@ -37,6 +37,8 @@ const Register = ({ setToken }) => {
     return (
         <>
             <form
+                className="h-3/4 w-1/4 flex flex-col items-center 
+        border-b-slate-400 border-b rounded-lg shadow-sm shadow-gray-400 m-5 bg-slate-50  p-3"
                 onSubmit={(e) => {
                     setError("");
                     e.preventDefault();
