@@ -32,6 +32,25 @@ const Posts = ({ posts }) => {
                             Price:{" "}
                             <span className="font-normal">{index.price}</span>
                         </p>
+                        <p className="font-semibold">
+                            Location:{" "}
+                            <span className="font-normal">
+                                {index.location}
+                            </span>
+                        </p>
+                        <p className="font-semibold">
+                            Post by:{" "}
+                            <span className="font-normal">
+                                {index.author.username}
+                            </span>
+                        </p>
+                        <p className="font-semibold">
+                            Post created:{" "}
+                            <span className="font-normal">
+                                {index.createdAt.slice(0, 10)}{" "}
+                                {index.createdAt.slice(11, 19)}
+                            </span>
+                        </p>
                     </div>
                 );
             })}

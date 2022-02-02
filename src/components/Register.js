@@ -45,7 +45,11 @@ const Register = ({ setToken }) => {
                     if (password !== confirm) {
                         return setError("Passwords do not match.");
                     }
-                    handleRegisterUser();
+                    if (password.length > 5) {
+                        handleRegisterUser();
+                    } else {
+                        setError("Password must be atleast 6 characters.");
+                    }
                 }}
             >
                 <input
@@ -57,6 +61,7 @@ const Register = ({ setToken }) => {
                     placeholder="Username"
                 ></input>
                 <input
+                    type="password"
                     required
                     value={password}
                     onChange={(e) => {
@@ -65,6 +70,7 @@ const Register = ({ setToken }) => {
                     placeholder="Password"
                 ></input>
                 <input
+                    type="password"
                     required
                     value={confirm}
                     onChange={(e) => {

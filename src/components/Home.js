@@ -19,9 +19,19 @@ const Home = ({ user }) => {
                 </Link>
             ) : (
                 <>
-                    <Link to="/login">Login</Link>
+                    <Link
+                        to="/login"
+                        className="flex flex-row items-center justify-center w-3/4 h-10 rounded-lg bg-blue-500 my-5 hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black"
+                    >
+                        Login
+                    </Link>
                     <h2>Or</h2>
-                    <Link to="/register">Signup</Link>
+                    <Link
+                        to="/register"
+                        className="flex flex-row items-center justify-center w-3/4 h-10 rounded-lg bg-blue-500 my-5 hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black"
+                    >
+                        Signup
+                    </Link>
                 </>
             )}
         </div>

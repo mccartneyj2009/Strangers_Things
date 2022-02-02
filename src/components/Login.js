@@ -52,6 +52,7 @@ const Login = ({ setToken }) => {
                     }}
                 ></input>
                 <input
+                    type="password"
                     value={password}
                     placeholder="Password"
                     onChange={(e) => {

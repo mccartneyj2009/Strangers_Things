@@ -6,6 +6,7 @@ import Register from "./components/Register";
 import Login from "./components/Login";
 import Navbar from "./components/Navbar";
 import Profile from "./components/Profile";
+import CreatePost from "./components/CreatePost";
 
 export const BASE_URL =
     "https://strangers-things.herokuapp.com/api/2110-FTB-ET-WEB-PT";
@@ -48,10 +49,13 @@ const App = (props) => {
                 <Home user={user} />
             </Route>
             <Route path="/profile">
-                <Profile />
+                <Profile user={user} />
             </Route>
             <Route path="/posts">
                 <Posts posts={posts} />
+            </Route>
+            <Route path="/createpost">
+                <CreatePost token={token} fetchPosts={fetchPosts} />
             </Route>
             <Route path="/register">
                 <Register setToken={setToken} />
