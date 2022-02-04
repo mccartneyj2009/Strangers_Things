@@ -1,40 +1,83 @@
 import React from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { BASE_URL } from "../App";
+import { FaSearch } from "react-icons/fa";
+import { useState } from "react/cjs/react.development";
 
 const Posts = ({ posts, user, fetchPosts }) => {
-    async function handleDeletePost() {
-        //stuff to delete post
-        const resp = await fetch(`${BASE_URL}/`);
+    const [searchTerm, setSearchTerm] = useState("");
+
+    const lsToken = localStorage.getItem("token");
+
+    const filteredPosts = posts.filter((post) => postMatches(post, searchTerm));
+    const postsToDisplay = searchTerm.length ? filteredPosts : posts;
+
+    async function handleDeletePost(postId) {
+        const resp = await fetch(`${BASE_URL}/posts/${postId}`, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+                Authorization: `Bearer ${lsToken}`,
+            },
+        });
+        const info = await resp.json();
 
         fetchPosts();
     }
 
+    function postMatches(post, text) {
+        return post.title.toLowerCase().includes(text.toLowerCase());
+    }
+
     if (posts.length > 0) {
         return (
-            <div className=" flex flex-col justify-center items-center w-full h-auto">
-                <form
-                    className="w-full flex flex-row justify-center items-center bg-slate-100 h-14"
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                    }}
-                >
-                    <label>Search Posts:</label>
-                    <input placeholder="Search term"></input>
-                    <button>Search</button>
-                </form>
-                {posts.map((index) => {
+            <div className=" flex flex-col justify-center items-center  w-full h-auto">
+                <div className="flex flex-row justify-between w-3/4">
+                    {lsToken ? (
+                        <Link
+                            to="/createpost"
+                            className="flex flex-row items-center justify-center h-10 px-9 rounded-lg bg-blue-500 my-5 shadow-gray-600 shadow-md hover:bg-blue-900 hover:text-white hover:shadow-lg hover:shadow-black"
+                        >
+                            Make a new posting
+                        </Link>
+                    ) : null}
+                    <form
+                        onSubmit={(e) => {
+                            e.preventDefault();
+                        }}
+                        className="flex flex-row items-center justify-between  mt-5 text-gray-600 border-2 border-gray-300 bg-white h-10 px-4 rounded-lg text-sm shadow-md shadow-gray-600 hover:shadow-black hover:shadow-lg"
+                    >
+                        <input
+                            onChange={(e) => {
+                                setSearchTerm(e.target.value);
+                            }}
+                            value={searchTerm}
+                            className=" focus:outline-none"
+                            type="search"
+                            name="search"
+                            placeholder="Search"
+                        />
+                        <button type="submit" className="flex flex-row">
+                            <FaSearch className="" />
+                        </button>
+                    </form>
+                </div>
+
+                {postsToDisplay.map((index) => {
                     return (
                         <div
-                            onClick={(e) => {
+                            onClick={() => {
                                 console.log(index._id);
                             }}
                             key={index._id}
                             className="flex flex-col border-b-slate-400 border-b rounded-lg shadow-sm shadow-gray-400 m-5 bg-slate-50 w-3/4 p-3"
                         >
-                            <h1 className="text-2xl font-semibold border-b border-b-slate-400">
+                            <Link
+                                to={`/postdetail/${index._id}`}
+                                className="text-2xl font-semibold border-b border-b-slate-400 hover:font-bold"
+                            >
                                 {index.title}
-                            </h1>
+                            </Link>
                             <p className="font-semibold">
                                 Description:{" "}
                                 <span className="font-normal">
@@ -70,9 +113,9 @@ const Posts = ({ posts, user, fetchPosts }) => {
                                 <div className="flex flex-row justify-center">
                                     <button
                                         onClick={() => {
-                                            console.log("clicked");
+                                            handleDeletePost(index._id);
                                         }}
-                                        className="flex flex-row items-center justify-center w-3/4 h-10 rounded-lg bg-blue-500 my-5 hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black"
+                                        className="flex flex-row items-center justify-center w-1/4 h-10 rounded-lg bg-blue-500 my-5 hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black"
                                     >
                                         Delete
                                     </button>

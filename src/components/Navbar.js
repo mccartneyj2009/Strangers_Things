@@ -4,7 +4,7 @@ import { Link, useHistory } from "react-router-dom";
 const Navbar = ({ user, setUser }) => {
     const history = useHistory();
     return (
-        <header className="bg-blue-500 w-screen sticky top-0">
+        <header className="bg-blue-500 h-auto w-screen sticky top-0 right-0 shadow-md shadow-gray-700 rounded-b-md">
             <div className="text-center font-extrabold text-3xl text-white">
                 Strangers Things
             </div>

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { BASE_URL } from "../App";
 
-const CreatePost = ({ token, fetchPosts }) => {
+const CreatePost = ({ fetchPosts }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");

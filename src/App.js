@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Route, Link } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Home from "./components/Home";
 import Posts from "./components/Posts";
 import Register from "./components/Register";
@@ -53,7 +53,7 @@ const App = (props) => {
                 <Profile user={user} />
             </Route>
             <Route path="/postdetail/:id">
-                <PostDetail />
+                <PostDetail posts={posts} fetchPosts={fetchPosts} user={user} />
             </Route>
             <Route path="/posts">
                 <Posts posts={posts} user={user} fetchPosts={fetchPosts} />
