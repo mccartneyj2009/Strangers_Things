@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import { useParams } from "react-router-dom/cjs/react-router-dom.min";
 import { BASE_URL } from "../App";
 
-const PostDetail = ({ posts, user, fetchPosts }) => {
+const PostDetail = ({ posts, fetchUser, fetchPosts }) => {
     const [message, setMessage] = useState("");
 
     const { id } = useParams();
@@ -21,12 +21,12 @@ const PostDetail = ({ posts, user, fetchPosts }) => {
         const info = await resp.json();
 
         fetchPosts();
+        fetchUser();
 
         history.push("/posts");
     }
 
     async function handleSendMessage() {
-        //console.log(`${BASE_URL}/posts/${id}/messages`);
         const resp = await fetch(`${BASE_URL}/posts/${id}/messages`, {
             method: "POST",
             headers: {
@@ -40,10 +40,8 @@ const PostDetail = ({ posts, user, fetchPosts }) => {
             }),
         });
         const info = await resp.json();
-        console.log(info);
 
         fetchPosts();
-
         setMessage("");
     }
 
@@ -75,14 +73,18 @@ const PostDetail = ({ posts, user, fetchPosts }) => {
 
                             <div>
                                 {element.messages.map((message) => {
-                                    return <p>{message}</p>;
+                                    return (
+                                        <p key={message._id}>
+                                            {message.content}
+                                        </p>
+                                    );
                                 })}
                             </div>
 
                             {/* If the user is logged in, a message can be sent or posting can be deleted */}
                             {lsToken ? (
                                 //The user is signed in and looking at a post that is their own
-                                element.author._id === user._id ? (
+                                element.isAuthor ? (
                                     <form
                                         id="message-form"
                                         onSubmit={(e) => {
@@ -106,7 +108,7 @@ const PostDetail = ({ posts, user, fetchPosts }) => {
                                             onClick={() => {
                                                 handleSendMessage();
                                             }}
-                                            className="flex flex-row items-center justify-center w-3/4 h-10 rounded-lg bg-blue-500 my-5 hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black"
+                                            className="flex flex-row items-center justify-center w-3/4 h-10 rounded-lg bg-blue-500 my-5 shadow-gray-600 shadow-md hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black "
                                         >
                                             Send Message
                                         </button>
@@ -114,7 +116,7 @@ const PostDetail = ({ posts, user, fetchPosts }) => {
                                             onClick={() => {
                                                 handleDeletePost(id);
                                             }}
-                                            className="flex flex-row items-center justify-center w-3/4 h-10 rounded-lg bg-blue-500 my-5 hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black"
+                                            className="flex flex-row items-center justify-center w-3/4 h-10 rounded-lg bg-blue-500 my-5 shadow-gray-600 shadow-md hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black"
                                         >
                                             Delete Posting
                                         </button>
@@ -144,7 +146,7 @@ const PostDetail = ({ posts, user, fetchPosts }) => {
                                             onClick={() => {
                                                 handleSendMessage();
                                             }}
-                                            className="flex flex-row items-center justify-center w-3/4 h-10 rounded-lg bg-blue-500 my-5 hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black"
+                                            className="flex flex-row items-center justify-center w-3/4 h-10 rounded-lg bg-blue-500 my-5 hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black shadow-gray-600 shadow-md"
                                         >
                                             Send Message
                                         </button>

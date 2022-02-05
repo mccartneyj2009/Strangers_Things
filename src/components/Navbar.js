@@ -1,13 +1,15 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const Navbar = ({ user, setUser }) => {
+const Navbar = ({ user, setUser, fetchPosts }) => {
     const history = useHistory();
     return (
         <header className="bg-blue-500 h-auto w-screen sticky top-0 right-0 shadow-md shadow-gray-700 rounded-b-md">
+            {/* Title bar */}
             <div className="text-center font-extrabold text-3xl text-white">
                 Strangers Things
             </div>
+            {/* Buttons */}
             <div
                 className="flex flex-row items-center justify-evenly p-2"
                 id="navbar"
@@ -56,6 +58,7 @@ const Navbar = ({ user, setUser }) => {
                             onClick={() => {
                                 setUser("");
                                 localStorage.removeItem("token");
+                                fetchPosts();
                                 history.push("/");
                             }}
                         >

@@ -1,14 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { BASE_URL } from "../App";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react/cjs/react.development";
 
-const Posts = ({ posts, user, fetchPosts }) => {
+const Posts = ({ posts, fetchPosts, fetchUser }) => {
     const [searchTerm, setSearchTerm] = useState("");
 
     const lsToken = localStorage.getItem("token");
-
     const filteredPosts = posts.filter((post) => postMatches(post, searchTerm));
     const postsToDisplay = searchTerm.length ? filteredPosts : posts;
 
@@ -23,24 +22,39 @@ const Posts = ({ posts, user, fetchPosts }) => {
         const info = await resp.json();
 
         fetchPosts();
+        fetchUser();
     }
 
     function postMatches(post, text) {
         return post.title.toLowerCase().includes(text.toLowerCase());
     }
 
+    useEffect(() => {
+        fetchPosts();
+        fetchUser();
+    }, [posts]);
+
     if (posts.length > 0) {
         return (
             <div className=" flex flex-col justify-center items-center  w-full h-auto">
                 <div className="flex flex-row justify-between w-3/4">
                     {lsToken ? (
+                        // Create post button
                         <Link
                             to="/createpost"
                             className="flex flex-row items-center justify-center h-10 px-9 rounded-lg bg-blue-500 my-5 shadow-gray-600 shadow-md hover:bg-blue-900 hover:text-white hover:shadow-lg hover:shadow-black"
                         >
                             Make a new posting
                         </Link>
-                    ) : null}
+                    ) : (
+                        <Link
+                            to="/"
+                            className="flex flex-row items-center justify-center h-10 px-9 rounded-lg bg-blue-500 my-5 shadow-gray-600 shadow-md hover:bg-blue-900 hover:text-white hover:shadow-lg hover:shadow-black"
+                        >
+                            Make a new posting
+                        </Link>
+                    )}
+                    {/* Search form */}
                     <form
                         onSubmit={(e) => {
                             e.preventDefault();
@@ -62,13 +76,10 @@ const Posts = ({ posts, user, fetchPosts }) => {
                         </button>
                     </form>
                 </div>
-
+                {/* Posts */}
                 {postsToDisplay.map((index) => {
                     return (
                         <div
-                            onClick={() => {
-                                console.log(index._id);
-                            }}
                             key={index._id}
                             className="flex flex-col border-b-slate-400 border-b rounded-lg shadow-sm shadow-gray-400 m-5 bg-slate-50 w-3/4 p-3"
                         >
@@ -109,13 +120,13 @@ const Posts = ({ posts, user, fetchPosts }) => {
                                     {index.createdAt.slice(11, 19)}
                                 </span>
                             </p>
-                            {index.author._id === user._id ? (
+                            {index.isAuthor ? (
                                 <div className="flex flex-row justify-center">
                                     <button
                                         onClick={() => {
                                             handleDeletePost(index._id);
                                         }}
-                                        className="flex flex-row items-center justify-center w-1/4 h-10 rounded-lg bg-blue-500 my-5 hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black"
+                                        className="flex flex-row items-center justify-center w-1/4 h-10 rounded-lg bg-blue-500 my-5 shadow-gray-600 shadow-md hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black"
                                     >
                                         Delete
                                     </button>
@@ -127,7 +138,7 @@ const Posts = ({ posts, user, fetchPosts }) => {
             </div>
         );
     } else {
-        return <></>;
+        return <>No Posts</>;
     }
 };
 

@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { BASE_URL } from "../App";
 
-const CreatePost = ({ fetchPosts }) => {
+const CreatePost = ({ fetchPosts, fetchUser }) => {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState("");
@@ -33,6 +33,7 @@ const CreatePost = ({ fetchPosts }) => {
         const info = await resp.json();
 
         fetchPosts();
+        fetchUser();
 
         history.push("/posts");
 
@@ -41,8 +42,6 @@ const CreatePost = ({ fetchPosts }) => {
         setPrice("");
         setLocation("");
         setDeliver(false);
-
-        console.log(info);
     }
 
     if (lsToken) {
@@ -131,7 +130,7 @@ const CreatePost = ({ fetchPosts }) => {
                         </select>
                     </div>
                     <div className="flex flex-row justify-center mt-5">
-                        <button className="flex flex-row items-center justify-center w-3/4 h-10 rounded-lg bg-blue-500 my-5 hover:bg-blue-900 hover:text-white hover:shadow-md hover:shadow-black">
+                        <button className="flex flex-row items-center justify-center w-3/4 h-10 rounded-lg bg-blue-500 my-5 shadow-gray-600 shadow-md hover:bg-blue-900 hover:text-white hover:shadow-lg hover:shadow-black">
                             Create Post
                         </button>
                     </div>
