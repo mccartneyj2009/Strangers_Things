@@ -1,8 +1,7 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { BASE_URL } from "../App";
 import { FaSearch } from "react-icons/fa";
-import { useState } from "react/cjs/react.development";
 
 const Posts = ({ posts, fetchPosts, fetchUser }) => {
     const [searchTerm, setSearchTerm] = useState("");
