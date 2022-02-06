@@ -1,9 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-    Redirect,
-    useHistory,
-} from "react-router-dom/cjs/react-router-dom.min";
+import { Redirect, useHistory } from "react-dom";
 import { BASE_URL } from "../App";
 
 const Register = ({ setToken }) => {

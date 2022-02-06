@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 import { BASE_URL } from "../App";
 import { FaSearch } from "react-icons/fa";
 import { useState } from "react/cjs/react.development";

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
 import { BASE_URL } from "../App";
 
 const PostDetail = ({ posts, fetchUser, fetchPosts }) => {

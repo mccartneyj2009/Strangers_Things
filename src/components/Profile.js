@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, Redirect } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, Redirect } from "react-dom";
 
 const ActivePosts = ({ user }) => {
     const activePosts = [];
