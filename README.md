@@ -1,2 +1,2 @@
-# UNIV.Lab.ReactRouter
-Follow the instructions in the workshop to complete this lab.
+# Stranger's Things
+A Craigslist type of site meant to find and sell things to others.
